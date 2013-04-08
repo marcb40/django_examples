@@ -1,7 +1,10 @@
 # Django settings for django_examples project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -9,10 +12,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DATABASE_NAME = os.path.join(SITE_ROOT, 'db') + '/dex.db'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'C:/django/dex.db',                      # Or path to database file if using sqlite3.
+        'NAME': DATABASE_NAME,                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -72,6 +77,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(SITE_ROOT, 'static'),
 )
 
 # List of finder classes that know how to find static files in
