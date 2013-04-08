@@ -28,7 +28,7 @@ class OrganizationGroup(models.Model):
     
     user_affiliates = models.ManyToManyField(User, through='UserGroup')  #TODO: validation
     categories = models.ManyToManyField(Category)  #TODO: validation
-    # media
+  
 
     class Meta:
         app_label = 'dex'
@@ -37,4 +37,4 @@ class OrganizationGroup(models.Model):
         return self.title
     
     def __str__(self):
-        return self.title    
+        return "id:" + str(self.id) + " title:" + self.title    
