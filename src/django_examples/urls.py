@@ -5,7 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-     url(r'^core/', include('dex.urls', namespace="core")),
+     url(r'^dex/', include('dex.urls', namespace="dex")),
     # Examples:
     # url(r'^$', 'django_examples.views.home', name='home'),
     # url(r'^django_examples/', include('django_examples.foo.urls')),
