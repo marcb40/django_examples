@@ -1,0 +1,13 @@
+{% load staticfiles %}
+
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" /> -->
+
+{% if examples %}
+    <ul>
+    {% for example in examples %}
+        <li><a href="{% url 'core:detail' example.id %}">{{ example.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No examples are available.</p>
+{% endif %}

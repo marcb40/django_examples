@@ -15,3 +15,6 @@ class OrganizationGroup(models.Model):
 
     class Meta:
         app_label = 'core_examples'
+        
+    def __str__(self):
+        return self.title
