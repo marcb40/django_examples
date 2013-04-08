@@ -1,5 +1,5 @@
-from core_examples.models.group import OrganizationGroup
-from core_examples.models.user import User
+from dex.models.group import OrganizationGroup
+from dex.models.user import User
 from django.db import models
 
 class Example(models.Model):
@@ -13,5 +13,5 @@ class Example(models.Model):
     userAffiliates = models.ManyToManyField(User, through='UserExample')
 
     class Meta:
-        app_label = 'core_examples'
+        app_label = 'dex'
 

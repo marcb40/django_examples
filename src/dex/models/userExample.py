@@ -3,8 +3,8 @@ Created on Apr 8, 2013
 
 @author: mbianchini
 '''
-from core_examples.models.example import Example
-from core_examples.models.user import User
+from dex.models.example import Example
+from dex.models.user import User
 from django.db import models
 
 class UserExample(models.Model):
@@ -14,4 +14,4 @@ class UserExample(models.Model):
     affiliationType = models.CharField(max_length=20) 
     
     class Meta:
-        app_label = 'core_examples'
+        app_label = 'dex'

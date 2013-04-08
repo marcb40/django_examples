@@ -1,5 +1,5 @@
-from core_examples.models.example import Example
-from core_examples.models.group import OrganizationGroup
+from dex.models.example import Example
+from dex.models.group import OrganizationGroup
 from django.db import models
 '''
 Created on Apr 8, 2013
@@ -15,4 +15,4 @@ class ExampleGroup(models.Model):
     funder = models.BooleanField() 
     
     class Meta:
-        app_label = 'core_examples'
+        app_label = 'dex'

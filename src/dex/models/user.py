@@ -21,5 +21,5 @@ class User(models.Model):
     passwordExpired = models.BooleanField()
     
     class Meta:
-        app_label = 'core_examples'
+        app_label = 'dex'
 

@@ -3,7 +3,7 @@ Created on Apr 8, 2013
 
 @author: mbianchini
 '''
-from core_examples.models.user import User
+from dex.models.user import User
 from django.db import models
 from django.db.models.fields.related import OneToOneField
 
@@ -22,4 +22,4 @@ class Profile(models.Model):
     user = OneToOneField(User)
 
     class Meta:
-        app_label = 'core_examples'
+        app_label = 'dex'

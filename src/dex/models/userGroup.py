@@ -3,9 +3,9 @@ Created on Apr 8, 2013
 
 @author: mbianchini
 '''
-from core_examples.models.user import User
+from dex.models.user import User
 from django.db import models
-from core_examples.models.group import OrganizationGroup
+from dex.models.group import OrganizationGroup
 
 class UserGroup(models.Model):
     group = models.ForeignKey(OrganizationGroup)
@@ -14,4 +14,4 @@ class UserGroup(models.Model):
     affiliationType = models.CharField(max_length=20) 
     
     class Meta:
-        app_label = 'core_examples'
+        app_label = 'dex'
