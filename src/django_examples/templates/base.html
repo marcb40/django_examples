@@ -1,0 +1,76 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% block header %}
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/screen.css' %}" />
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}" />
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/960.css' %}" />
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui-1.9.2.custom.css' %}" />
+	    <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery-1.8.2.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.dropdownmenu.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jflow.plus.min.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.easytabs.min.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.imageselector.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.observable.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.select.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.selectlist.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.staticscroll.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery.validate.min.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jquery-ui-1.9.2.custom.min.js' %}"></script>
+	    <script type="text/javascript" src="{% static 'js/jsrender.js' %}"></script>
+    {% endblock %}
+    <title>{% block title %} Dex {% endblock %}</title>
+</head>
+
+<body>
+	<header class="container_12">
+		<div class="grid_3">
+			<a href="/"><img src="{% static 'images/logo.jpg' %}" width="155" height="72" alt="Logo" title="Working Examples" class="logo" /></a>
+		</div>
+		
+		<nav class="grid_9 subnavigation">
+			<div>
+				<ul>
+					<li><a href="/about" title="About">About</a></li>
+					<li><a href="/help" title="Tutorials &amp; FAQ">Tutorials & FAQ</a></li>
+					<li><a href="#" title="Contact">Contact</a></li>
+					<li><img id="openSearch" style="cursor:pointer;" src="{% static 'images/mag-glass.jpg' %}" /></li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="clear"></div>
+		
+		<nav class="grid_7 alpha navigation">
+			<ul>
+				<li class="examples"><a href="#" title="Contact">Examples</a></li>
+				<li class="groups"><a href="#" title="Contact">Groups</a></li>
+				<li class="people"><a href="#" title="Contact">People</a></li>
+				<li class="blog"><a href="#" title="Blog">Blog</a></li>
+			</ul>
+		</nav>
+		
+	</header>
+	
+	<div class="container_12 content">
+    	{% block content %}{% endblock %}
+    </div>
+    
+    <div style="clear: both;"></div>
+	
+	<div id="modal"></div>
+	
+	<footer class="container_12">
+		<nav>
+			<ul>
+				<li><a href="#" title="About">About</a></li>
+				<li><a href="#" title="Tutorials &amp; FAQ">Tutorials & FAQ</a></li>
+				<li><a href="#" title="Contact">Contact</a></li>
+				<li><a href="#" title="Terms of Use">Terms of Use</a></li>
+			</ul>
+		</nav>
+	</footer>
+</body>
+</html>

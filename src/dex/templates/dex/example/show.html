@@ -1,5 +1,226 @@
-{% load staticfiles %}
+{% extends "base.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/screen.css' %}" />
+{% block header %}
+	{{ block.super }} 
+	<script type="text/javascript" src="/static/js/socialMedia.js"></script>
+{% endblock %}
 
-<h1>Example Show for {{ exampleInstance.title }}</h1>
+{% block title %}Example: {{ exampleInstance.title }}{% endblock %}
+
+{% block content %}
+	 <div role="main">
+		<div id="save-panel" class="container_12" style="padding-bottom:20px;">
+			<div class="grid_8">
+				<h1>Here's your example</h1>
+				<p><span id="exampleSubTitle">To make changes just click the edit button.</span></p>
+			</div>
+									
+			<div class="grid_4" style="text-align: right;">
+				<a href="/example/edit/{{exampleInstance.id}}">
+					<button id="editBtn" class="dark" style="margin-top: 26px;">Edit</button>
+				</a>
+			</div>
+		</div>
+		<div class="clear"></div>
+	
+		<div class="container_12">
+			<div class="grid_8">
+				<div class="content-panel example">
+
+					<span class="example-name">{{ exampleInstance.title }}</span>
+					
+					<div style="margin-top: 25px; display:inline-block" >
+						<p>{{exampleInstance.summary}}</p>
+					</div>
+					
+					<div>
+						<!-- <g:render template="/example/follow"></g:render> -->
+												
+						<div style="display:inline-block">
+							<button id="shareBtn" class="dark" style="margin-right:10px; margin-top:15px">Share</button>
+							<div id="share-dropdown" class="round">
+								<ul id="share">
+									<li id="facebook"><div style="height:32px"><div class="facebookImg"></div><span style="position:relative; top:-10px">Facebook</span></div></li>
+									<li id="google"><div style="height:32px"><div class="googleImg"></div><span style="position:relative; top:-10px">Google+</span></div></li>
+									<li id="twitter"><div style="height:32px"><div class="twitterImg"></div><span style="position:relative; top:-10px">Twitter</span></div></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="clear"></div>
+					
+				<div id="tab-section" style="margin-top: 30px; margin-left:0px;">
+							<!-- <%-- TABS --%> -->
+						
+							<div id="example-display-tabs" style="margin-left:0px;">
+								<div class="grid_8 alpha">
+									<ul style="list-style: none; margin: 0px; padding: 0px;">
+											<li style="margin-left: 0px; float: left; padding-right: 5px; width:165px;"><a href="#tab-updates" style="text-align:center; width:145px; padding-left:10px; padding-right:10px;">Updates</a></li>
+											<li style="margin-left: 10px; float: left; padding-right: 5px; width:165px;"><a href="#tab-phases" style="text-align:center; width:145px; padding-left:10px; padding-right:10px;">Phases</a></li>
+											<li id="tabDiscussion" style="margin-left: 10px; float: left; padding-right: 5px; width:165px;"><a href="#tab-discussion" style="text-align:center; width:145px; padding-left:10px; padding-right:10px;">Workspace</a></li>
+									</ul>
+								</div>
+								<div class="clear"></div>
+								
+								<div id="tab-content" class="grid_8 alpha">
+									<div style="margin-left: 20px;">
+										
+										<!-- <%--  UPDATES --%> -->
+										<div id="tab-updates"
+											style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-top: 0px;;  min-height: 530px  ">
+						
+											<div
+												style="width: 150px; display: inline; float: left; margin-left: 0px;">
+												
+												<!-- <%-- TIMELINE --%> -->
+												<div>
+													<ul id="timeline-of-updates" ></ul>
+												</div>
+												
+											</div>
+						
+											<div 
+												style="width:385px; float: left; margin-left: 20px; padding-right: 0px; margin-right: 0px;">
+												<div id="update-section" style="margin-bottom:20px"></div>
+												<div class="clear"></div>
+												<div id="update-comment-section" ></div>
+											</div>
+										</div>	
+				
+										
+										<!-- <%-- PHASES & DISCUSSION --%> -->
+											<div id="tab-phases" class="phase-tabs example"
+												style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-top: 0px;">
+
+												<div id="phase-tabs">
+													<ul style="list-style: none; margin-top: 20px; padding: 0px;">
+														<li style="margin-left: 0px; float: left; padding-right: 5px; border-right: 1px solid #C9C9C9;"><a href="#tab-seed">Seed</a></li>
+														<li style="margin-left: 14px; float: left; padding-right: 5px; border-right: 1px solid #C9C9C9;"><a	href="#tab-sprout">Sprout</a></li>
+														<li style="margin-left: 14px; float: left; padding-right: 5px;"><a href="#tab-bloom">Bloom</a></li>
+													</ul>
+													<!-- <%-- SEED --%> -->
+													<g:render template="phaseQuestionsShow" model="${[phase:exampleInstance.seed, phaseLowerName:'seed', phaseProperName:'Seed', phaseQuestions:seedQuestions, type:ExampleCommentType.SEED, commentCount:seedCommentCount]}" />
+													<!-- <%-- SPROUT --%> -->
+													<g:render template="phaseQuestionsShow" model="${[phase:exampleInstance.sprout, phaseLowerName:'sprout', phaseProperName:'Sprout', phaseQuestions:sproutQuestions, type:ExampleCommentType.SPROUT, commentCount:sproutCommentCount]}" />
+													<!-- <%-- BLOOM --%> -->
+													<g:render template="phaseQuestionsShow" model="${[phase:exampleInstance.bloom, phaseLowerName:'bloom', phaseProperName:'Bloom', phaseQuestions:bloomQuestions, type:ExampleCommentType.BLOOM, commentCount:bloomCommentCount]}" />
+												</div>
+											</div>
+											
+											<div id="tab-discussion"
+												style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-top: 0px;  min-height: 530px">
+												<g:render template="/discussion/discussion" model="${[discussionController:'exampleDiscussion', entityName:'example', entityId:exampleInstance.id, allowEdit:true]}" />
+											</div>
+						
+									</div>
+						
+								</div>
+								<div class="clear"></div>
+							</div>
+						
+						
+						</div>
+					
+				
+			</div>
+		
+			<div class="grid_4">
+					<div style="position: relative; margin-top:25px;" ></div>
+				
+					<!-- TAGS -->
+					<g:if test="${exampleInstance?.tags}">
+						<div id="btn-tags" style="position: relative; margin-bottom: 50px;">
+							<h2><g:message code="example.tags.label" /></h2>
+							<ul id="tags" class="tags"></ul>
+							<div class="clear"></div>
+						</div>
+					</g:if>
+					
+					<!-- TEAM -->
+					<g:if test="${team}">
+						<div id="btn-team" style="position: relative;  margin-bottom: 50px; width:250px;" >
+							<h2><g:message code="example.team.label" /> (${teamCount})</h2>
+							<ul id="exTeam" class="team-members"></ul>
+							<div class="clear"></div>	
+							<g:if test="${teamCount > 8 }">
+								<nav:more action="team"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="8" total="${teamCount}" originatorTitle="${exampleInstance?.title}" />
+							</g:if>					
+						</div>
+					</g:if>
+					
+					<!-- GROUPS -->
+					<g:if test="${groups}">
+						<div id="btn-groups" style="position: relative;  margin-bottom: 50px; width:250px;" >
+							<h2><g:message code="example.groups.label" /> (${groupsCount})</h2>
+							<ul id="exGroups" class="example-groups"></ul>
+							<div class="clear"></div>	
+							<g:if test="${groupsCount > 3 }">
+								<nav:more action="groups"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="3" total="${groupsCount}" originatorTitle="${exampleInstance?.title}" />
+							</g:if>					
+						</div>
+					</g:if>
+					
+					<!-- ORGANIZATIONS -->
+					<g:if test="${organizations}">
+						<div id="btn-orgs" style="position: relative;  margin-bottom: 50px; width:250px;" >
+							<h2><g:message code="example.organizations.label" /> (${organizationsCount})</h2>
+							<ul id="exOrgs" class="example-organizations"></ul>
+							<div class="clear"></div>	
+							<g:if test="${organizationsCount > 2 }">
+								<nav:more action="organizations"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="2" total="${organizationsCount}" originatorTitle="${exampleInstance?.title}" />
+							</g:if>					
+						</div>
+					</g:if>
+					
+					<!-- INSPIRED BY -->
+					<g:if test="${inspiredByList}">
+						<div id="btn-inspBy" style="position: relative;  margin-bottom: 50px; width:250px;" >
+							<h2><g:message code="example.inspiredBy.label" /> (${inspiredByCount})</h2>
+							<ul id="exInspBy" class="example-inspirations"></ul>
+							<div class="clear"></div>	
+							<g:if test="${inspiredByCount > 1 }">
+								<nav:more action="inspiredBy"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="1" total="${inspiredByCount}" originatorTitle="${exampleInstance?.title}" />
+							</g:if>					
+						</div>
+					</g:if>
+					
+					<!-- INSPIRATION FOR -->
+					<g:if test="${inspirationFor}">
+						<div id="btn-inspFor" style="position: relative;  margin-bottom: 50px; width:250px;" >
+							<h2><g:message code="example.inspiration.label" /> (${inspirationForCount})</h2>
+							<ul id="exInspFor" class="example-inspirations"></ul>
+							<div class="clear"></div>	
+							<g:if test="${inspirationForCount > 1 }">
+								<nav:more action="inspirationFor"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="1" total="${inspirationForCount}" originatorTitle="${exampleInstance?.title}" />
+							</g:if>					
+						</div>
+					</g:if>
+					
+					<!-- RELATED EXAMPLES -->
+					<g:if test="${relatedExamples}">
+						<div id="btn-related" style="position: relative;  margin-bottom: 50px; width:250px;" >
+							<h2><g:message code="example.relatives.label" /> (${relatedExamplesCount})</h2>
+							<ul id="exRelated" class="example-relatives"></ul>
+							<div class="clear"></div>	
+							<g:if test="${relatedExamplesCount > 3 }">
+								<nav:more action="examples"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="3" total="${relatedExamplesCount}" originatorTitle="${exampleInstance?.title}" />
+							</g:if>					
+						</div>
+					</g:if>
+				
+				</div>	
+		
+		</div>
+	</div>	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#share-dropdown').dropdownmenu({button: 'shareBtn'});
+			
+			$('#example-display-tabs').tabs();
+			$('#phase-tabs').tabs();
+		});
+	</script>	
+	<link rel="stylesheet" type="text/css" href="/static/css/ckdialog.css"/>	
+{% endblock %}
