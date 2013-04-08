@@ -8,6 +8,8 @@ from dex.models.exampleGroup import ExampleGroup
 from dex.models.group import OrganizationGroup
 from dex.models.profile import Profile
 from dex.models.user import User
+from dex.models.userExample import UserExample
+from dex.models.userGroup import UserGroup
 from django.contrib import admin
 
 
@@ -16,3 +18,5 @@ admin.site.register(OrganizationGroup)
 admin.site.register(Profile)
 admin.site.register(User)
 admin.site.register(ExampleGroup)
+admin.site.register(UserExample)
+admin.site.register(UserGroup)

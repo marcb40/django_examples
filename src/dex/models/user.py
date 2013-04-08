@@ -6,19 +6,19 @@ Created on Apr 8, 2013
 from django.db import models
 
 class User(models.Model):
-    username = models.CharField(max_length=20)
-    passowrd = models.CharField(max_length=20)
+    user_name = models.CharField(max_length=20, blank=False)
+    password = models.CharField(max_length=20, blank=False)
     
-    firstName =  models.CharField(max_length=50)
-    lastName =  models.CharField(max_length=50)
+    first_name =  models.CharField(max_length=50, blank=False)
+    last_name =  models.CharField(max_length=50, blank=False)
     
-    dateCreated = models.DateField()
-    lastUpdated = models.DateField()
+    date_created = models.DateField('Created', auto_now_add=True)
+    last_updated = models.DateField('Updated', auto_now=True)
     
     enabled = models.BooleanField()
-    accountExpired = models.BooleanField()
-    accountLocked = models.BooleanField()
-    passwordExpired = models.BooleanField()
+    account_expired = models.BooleanField()
+    account_locked = models.BooleanField()
+    password_expired = models.BooleanField()
     
     class Meta:
         app_label = 'dex'
