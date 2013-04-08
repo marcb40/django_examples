@@ -1,3 +1,4 @@
+from core_examples.models.user import User
 from django.db import models
 
 class OrganizationGroup(models.Model):
@@ -9,6 +10,8 @@ class OrganizationGroup(models.Model):
     dateCreated = models.DateField()
     lastUpdated = models.DateField()
     orgStatus = models.CharField(max_length=20)
+    
+    userAffiliates = models.ManyToManyField(User, through='UserGroup')
 
     class Meta:
         app_label = 'core_examples'
