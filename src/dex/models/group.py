@@ -1,6 +1,8 @@
 from dex.models.category import Category
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.fields.related import OneToOneField
+from dex.models.featurette import Featurette
 
 
 GROUP_TYPE = (
@@ -28,7 +30,7 @@ class OrganizationGroup(models.Model):
     
     user_affiliates = models.ManyToManyField(User, through='UserGroup')  #TODO: validation
     categories = models.ManyToManyField(Category)  #TODO: validation
-  
+    featurette = OneToOneField(Featurette, null=True)
 
     class Meta:
         app_label = 'dex'

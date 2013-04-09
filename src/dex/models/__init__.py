@@ -15,3 +15,5 @@ from dex.models.media import ExampleMedia
 from dex.models.media import ExamplePhoto
 from dex.models.media import ExampleVideo
 
+from dex.models.featurette import Featurette
+

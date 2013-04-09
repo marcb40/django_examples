@@ -6,6 +6,7 @@ Created on Apr 8, 2013
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.fields.related import OneToOneField
+from dex.models.featurette import Featurette
 
 class Profile(models.Model):
     workplace = models.CharField(max_length=200, blank=False)
@@ -18,6 +19,7 @@ class Profile(models.Model):
     last_updated = models.DateField('Updated', auto_now=True)
     
     includeOnAbout = models.BooleanField()
+    featurette = OneToOneField(Featurette, null=True)
     
     user = OneToOneField(User)
 
