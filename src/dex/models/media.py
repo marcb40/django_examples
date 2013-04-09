@@ -26,7 +26,7 @@ class GroupMedia(Media):
         
 class GroupPhoto(GroupMedia):  
     title = models.CharField(max_length=60)
-    #TODO: photo_file = models.FileField()  or more appropriately ImageField
+    photo_file = models.FileField(upload_to='group_photos')  #more appropriately ImageField, but this requires an image lib that isn't yet supported for python 3.3
     
     class Meta:
         app_label = 'dex'
@@ -57,7 +57,7 @@ class ExampleMedia(Media):
         
 class ExamplePhoto(ExampleMedia):  
     title = models.CharField(max_length=60)
-    #TODO: photo_file = models.FileField()  or more appropriately ImageField
+    photo_file = models.FileField(upload_to='example_photos')  #more appropriately ImageField, but this requires an image lib that isn't yet supported for python 3.3
     
     class Meta:
         app_label = 'dex'
