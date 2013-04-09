@@ -55,7 +55,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'dex',
+    'tagging',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -161,3 +162,7 @@ LOGGING = {
         },
     }
 }
+
+
+# for tagging app
+FORCE_LOWERCASE_TAGS = True
