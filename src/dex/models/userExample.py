@@ -4,7 +4,7 @@ Created on Apr 8, 2013
 @author: mbianchini
 '''
 from dex.models.example import Example
-from dex.models.user import User
+from django.contrib.auth.models import User
 from django.db import models
 
 EXAMPLE_AFFILIATION_TYPE = (

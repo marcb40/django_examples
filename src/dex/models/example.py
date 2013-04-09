@@ -1,5 +1,5 @@
 from dex.models.group import OrganizationGroup
-from dex.models.user import User
+from django.contrib.auth.models import User
 from django.db import models
 
 class Example(models.Model):

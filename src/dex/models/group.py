@@ -1,6 +1,6 @@
-from dex.models.user import User
-from django.db import models
 from dex.models.category import Category
+from django.contrib.auth.models import User
+from django.db import models
 
 
 GROUP_TYPE = (

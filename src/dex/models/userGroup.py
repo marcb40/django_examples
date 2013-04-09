@@ -3,9 +3,9 @@ Created on Apr 8, 2013
 
 @author: mbianchini
 '''
-from dex.models.user import User
-from django.db import models
 from dex.models.group import OrganizationGroup
+from django.contrib.auth.models import User
+from django.db import models
 
 class UserGroup(models.Model):
     group = models.ForeignKey(OrganizationGroup)
