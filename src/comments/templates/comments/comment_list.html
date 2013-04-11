@@ -1,0 +1,103 @@
+<style>
+	.add-comment textarea {
+		width:100%;
+		padding-right:0px;
+		height:100px;
+	}
+</style>
+
+{% load comment_includes %}
+<div id="{{type}}commentresults" style="font-size:100%">
+	{% if comments %}
+		{% for c in comments %}
+			<div class="comments" style="border-top:solid 1px #EAEAEA;">
+				{% comment_details c %}
+			</div>
+			<!-- <g:each in="${c.comments}" var="cr1">
+				<div class="comments" style="margin-left:50px; border-top:solid 1px #EAEAEA;">
+					<g:render template="/comment/comment" model="${[c:cr1, type:type, entityId:entityId, showReply:true]}"></g:render>
+				</div>
+				<g:each in="${cr1.comments}" var="cr2">
+					<div class="comments" style="margin-left:100px; border-top:solid 1px #EAEAEA;">
+						<g:render template="/comment/comment" model="${[c:cr2, type:type, entityId:entityId, showReply:false]}"></g:render>
+					</div>
+				</g:each>
+			</g:each> -->
+		{% endfor %}
+	{% endif %}
+		<div id="{{type}}-addCommentContainer" class="add-comment">
+			<form id="{{type}}-addCommentForm" action="/comments/add/" method="post">{% csrf_token %}
+				{% for field in form.visible_fields %}
+			        <div class="fieldWrapper">
+			
+			            {# Include the hidden fields in the form #}
+			            {% if forloop.first %}
+			                {% for hidden in form.hidden_fields %}
+			                {{ hidden }}
+			                {% endfor %}
+			            {% endif %}
+			
+			            <div style="color:red;">{{ field.errors }}</div>
+			            {{ field }}
+			        </div>
+			    {% endfor %}
+			    <button id="{{type}}-addComment" class="dark" onClick="return false;">Submit</button>
+				<button id="{{type}}-addCommentCancel" class="light" onClick="return false;">Cancel</button>
+			</form>
+		</div>
+				
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('#{{type}}-addComment').click(function(event){
+		    var form = $('#{{type}}-addCommentForm');
+		    $.post(
+		    		form.attr('action'), 
+		    		form.serialize(), 
+		    		function(data, textStatus, jqXHR){
+		    			$('#{{type}}commentresults').html(data);
+		    			$('#id_comment').val('');
+		    		}
+		    );
+	});
+
+	$('#{{type}}-addCommentCancel').click(function(event){
+		$('#id_comment').val('');
+	});
+
+	$('button[id^="{{type}}-save"]').click(function(event){
+		var id = event.target.id.replace('{{type}}-save', '');
+		if ($('#{{type}}-comment' + id).val().trim() != '') {
+			$('#{{type}}-replyForm' + id).submit();
+		}
+	});
+
+	$('button[id^="{{type}}-cancel"]').click(function(event){
+		var id = event.target.id.replace('{{type}}-cancel', '');
+		$('#{{type}}-comment' + id).val('');
+		$('#{{type}}-replyContainer' + id).hide({duration:300, easing:'swing'});
+	});
+
+	$('span[id^="{{type}}-reply"]').click(function(event){
+		var id = event.target.id.replace('{{type}}-reply', '');
+		$('#{{type}}-replyContainer' + id).show({duration:300, easing:'swing'});
+	});
+
+	$('input[id^="{{type}}-star"]').click(function(event){
+		var id = event.target.id.replace('{{type}}-star', '');
+		var action = (event.target.checked) ? 'like' : 'unlike';
+		$.post( '/${controller}/' + action,
+				{id:id},
+				function (response) {
+					var style = (response == 0) ? 'none' : 'inline';
+					$('#{{type}}-starCountContainer' + id).css('display', style);
+					
+					var who = (response > 1) ? 'People' : 'Person';
+					$('#{{type}}-starCount' + id).html(response + ' ' + who);
+				}
+			);		
+	});
+})
+</script>

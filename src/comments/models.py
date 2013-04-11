@@ -12,7 +12,9 @@ class CommentManager(models.Manager):
 
     def add_comment(self, obj, comment):
         ctype = ContentType.objects.get_for_model(obj)
-        self.get_or_create(comment=comment, content_type=ctype, object_id=obj.pk)
+        comment.content_type = ctype
+        comment.object_id=obj.pk
+        comment.save()
 
     def get_for_object(self, obj):
         """
@@ -22,6 +24,13 @@ class CommentManager(models.Manager):
         ctype = ContentType.objects.get_for_model(obj)
         return self.filter(content_type__pk=ctype.pk,
                            object_id=obj.pk)
+    
+    def get_by_id(self, entity_id, content_type_id):
+        """
+        Create a queryset matching all comments associated with the id.
+        """
+        return self.filter(content_type__pk=content_type_id,
+                           object_id=entity_id)
 
 
 
@@ -31,9 +40,7 @@ class Comment(models.Model):
     object_id = models.PositiveIntegerField('object id', db_index=True)
     object = generic.GenericForeignKey('content_type', 'object_id')
     
-    original = models.ForeignKey('self', related_name="all_children", null=True)
     parent = models.ForeignKey('self', related_name="immediate_children", null=True)
-    
     creator = models.ForeignKey(User, null=True)
     
     date_created = models.DateField('Created', auto_now_add=True)
@@ -47,12 +54,12 @@ class Comment(models.Model):
         app_label = 'comments'
         
     def __unicode__(self):
-        return self.comment
+        return self.comment[0:15]
     
     def __str__(self):
-        return self.comment
+        return self.comment[0:15]
     
-class CommentRanking(models.Model):
+class CommentFlag(models.Model):
     user = models.ForeignKey(User)
     comment = models.ForeignKey(Comment)
     

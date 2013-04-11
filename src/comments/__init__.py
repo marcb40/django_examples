@@ -1,3 +1,4 @@
+from comments.models import Comment
 class AlreadyRegistered(Exception):
     """
     An attempt was made to register a model more than once.
@@ -8,27 +9,22 @@ class AlreadyRegistered(Exception):
 registry = []
 
 
+def add_comment(self, comment):
+    Comment.objects.add_comment(self, comment)
+    
+def get_comments(self):
+    return Comment.objects.get_for_object(self)
+
 def register(model, comments_descriptor_attr='comments'):
     """
     Sets the given model class up for working with comments.
     """
-
-    from comments.managers import CommentDescriptor
-
     if model in registry:
         raise AlreadyRegistered("The model '%s' has already been "
             "registered." % model._meta.object_name)
-    if hasattr(model, comments_descriptor_attr):
-        raise AttributeError("'%s' already has an attribute '%s'. You must "
-            "provide a custom comments_descriptor_attr to register." % (
-                model._meta.object_name,
-                comments_descriptor_attr,
-            )
-        )
-
-
-    # Add comment descriptor
-    setattr(model, comments_descriptor_attr, CommentDescriptor())
-
+    
+    model.add_to_class("add_comment", add_comment) 
+    model.add_to_class("get_comments", get_comments) 
+    
     # Finally register in registry
     registry.append(model)

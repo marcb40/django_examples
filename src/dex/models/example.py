@@ -1,8 +1,9 @@
+from dex.models.featurette import Featurette
 from dex.models.group import OrganizationGroup
 from django.contrib.auth.models import User
 from django.db import models
-from dex.models.featurette import Featurette
 from django.db.models.fields.related import OneToOneField
+import comments
 
 class Example(models.Model):
     title = models.CharField(max_length=60, blank=False)
@@ -15,7 +16,7 @@ class Example(models.Model):
     groups = models.ManyToManyField(OrganizationGroup, through='ExampleGroup')
     user_affiliates = models.ManyToManyField(User, through='UserExample')
     featurette = OneToOneField(Featurette, null=True)
-
+    
     class Meta:
         app_label = 'dex'
         
@@ -25,4 +26,4 @@ class Example(models.Model):
     def __str__(self):
         return self.title
 
-
+comments.register(Example)

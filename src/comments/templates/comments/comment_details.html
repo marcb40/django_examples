@@ -1,0 +1,41 @@
+		<div>
+				<div class="profile">
+					<a href="#"  title="{{c.creator.first_name}}"  /></a>
+				</div>
+				<div class="header"> 
+					<div class="name">{{c.creator.first_name}}</div>
+					<div class="date">{{c.date_created}}</div>
+				</div>
+				
+				<div class="commentContainer">
+					<div class="comment"> 
+						<div>{{c.comment}}</div>
+					</div>
+						<div class="link"> 
+							<span id="{{type}}-reply{{c.id}}" style="padding-right: 30px; margin:0px;">REPLY</span>
+							 <div style="display:inline-block;">
+								 <input type="checkbox" id="{{type}}-star{{c.id}}" name="{{type}}-star{{c.id}}" class="star" />
+	            				 <label for="{{type}}-star{{c.id}}" style="padding-right: 15px; cursor: pointer;"><span></span>STAR</label>
+	            				<!--  <g:form id="{{type}}-starForm${c.id}">
+	            				 	<g:hiddenField id="id" name="id" value="${c.id}"/>
+	            				 </g:form> -->
+            				 </div>
+            				<!--  <span id="{{type}}-starCountContainer${c.id}" class="starred" style="cursor: default; display: ${c.commentRankings?.size() > 0 ? 'inline' : 'none'}">
+            				 	<span id="{{type}}-starCount${c.id}" style="cursor: default; margin:0px;">${c.commentRankings?.size()} ${c.commentRankings?.size() == 1 ? 'Person' : 'People'}
+            				 </span> starred this</span> -->
+						</div>
+					<div id="{{type}}-replyContainer${c.id}" style="display:none;">
+						<!-- <g:formRemote name="{{type}}-replyForm${c.id}" url="${[controller: controller, action: 'reply']}" update="{{type}}commentresults" >
+							<g:hiddenField name="replyToId" value="${c.id}"/>
+							<g:hiddenField name="type" value="{{type}}"/>
+							<g:hiddenField name="example.id" value="${entityId}"/>
+							<g:hiddenField name="blog.id" value="${entityId}"/>
+							<g:hiddenField name="update.id" value="${entityId}"/>
+							<g:textArea id="{{type}}-comment${c.id}" name="comment" cols="40" rows="3" maxlength="300"
+								value="" style="width: 100%; padding-right:0px" />
+							<button id="{{type}}-save${c.id}" class="dark" onClick="return false;">Submit</button>
+							<button id="{{type}}-cancel${c.id}" class="light" onClick="return false;">Cancel</button>
+						</g:formRemote> -->
+					</div>
+				</div>
+			</div>

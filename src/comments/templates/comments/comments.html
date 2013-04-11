@@ -1,1 +1,62 @@
-<p>Comments for {{ exampleInstance.title }}</p>
+{% load comment_includes %}
+
+<div id="{{type}}CommentContainer">
+	<div style="padding-top:20px; padding-bottom:30px; border-bottom:solid 1px #EAEAEA;">
+		<div class="commentLabel" style="float:left;">Comments (<div style="display:inline;" id="{{type}}countTotal">{{ comment_count }}</div>)</div>
+		<div style="float:right;">
+			<div id="{{type}}showComments" class="commentShowHide" style="display:inline;"  >
+					SHOW COMMENTS
+			</div>
+			<div id="{{type}}hideComments" class="commentShowHide" style="display:none;" >
+					HIDE COMMENTS
+			</div>
+			<span style="margin-left:5px; display:inline;">
+				<input type="checkBox" id="{{type}}chk_showall"  class="expand-collapse" name="{{type}}chk_showall" value=false   />
+				<label for="{{type}}chk_showall" style="display:inline;"><span></span></label> 
+			</span>
+			
+			
+		</div>	
+	</div>
+	<div class="clear"></div>
+		
+	<div id="{{type}}allComments" style="display:none;">
+		{% comment_list %}
+	</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('#{{type}}chk_showall').click(function(){
+		toggleComments($('#{{type}}chk_showall').attr('checked'));
+	});
+
+	$('#{{type}}showComments').click(function(){
+		toggleComments(true);
+	});
+
+	$('#{{type}}hideComments').click(function(){
+		toggleComments(false);
+	});
+
+	function toggleComments(show) {
+		if(show) {
+    		$('#{{type}}hideComments').css('display', 'inline');
+ 	    	$('#{{type}}showComments').css('display', 'none');
+ 	    	$('#{{type}}chk_showall').attr('checked', true);
+ 	    	setComments();
+ 	    } else {
+	        $('#{{type}}hideComments').css('display', 'none');
+      	 	$('#{{type}}showComments').css('display', 'inline');
+      		$('#{{type}}chk_showall').attr('checked', false);
+      	 	$('#{{type}}allComments').hide({duration:300, easing:'swing'});
+        }
+	}
+
+	function setComments() {
+	//	$('#{{type}}commentresults').html({{comments}});
+		$('#{{type}}allComments').show({duration:300, easing:'swing'});
+	}
+})
+</script>

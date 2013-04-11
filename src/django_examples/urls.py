@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
      url(r'^dex/', include('dex.urls', namespace="dex")),
+     url(r'^comments/', include('comments.urls', namespace="comments")),
     # Examples:
     # url(r'^$', 'django_examples.views.home', name='home'),
     # url(r'^django_examples/', include('django_examples.foo.urls')),
