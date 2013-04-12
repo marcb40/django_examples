@@ -4,7 +4,7 @@
 					<a href="#"  title="{{c.creator.first_name}}"  /></a>
 				</div>
 				<div class="header"> 
-					<div class="name">{{c.creator.first_name}}</div>
+					<div class="name">{% comment_creator c %}</div>
 					<div class="date">{{c.date_created}}</div>
 				</div>
 				
@@ -14,23 +14,23 @@
 					</div>
 						<div class="link"> 
 							{% if show_reply %}
-							 <span id="{{type}}-reply{{c.id}}" style="padding-right: 30px; margin:0px;">REPLY</span>
+							 <span id="{% entity_type entity %}-reply{{c.id}}" style="padding-right: 30px; margin:0px;">REPLY</span>
 							 {% endif %}
 							 <div style="display:inline-block;">
-								 <input type="checkbox" id="{{type}}-star{{c.id}}" name="{{type}}-star{{c.id}}" class="star" {% is_starred c current_user_id %} />
-	            				 <label for="{{type}}-star{{c.id}}" style="padding-right: 15px; cursor: pointer;"><span></span>STAR</label>
-	            				 <form id="{{type}}-starForm{{c.id}}">{% csrf_token %}
+								 <input type="checkbox" id="{% entity_type entity %}-star{{c.id}}" name="{% entity_type entity %}-star{{c.id}}" class="star" {% is_starred c current_user_id %} />
+	            				 <label for="{% entity_type entity %}-star{{c.id}}" style="padding-right: 15px; cursor: pointer;"><span></span>STAR</label>
+	            				 <form id="{% entity_type entity %}-starForm{{c.id}}">{% csrf_token %}
 	            				 	{% for hidden in star_form.hidden_fields %}
 							                {{ hidden }}
 							        {% endfor %}
 	            				 </form>
             				 </div>
-            				 <span id="{{type}}-starCountContainer{{c.id}}" class="starred" style="cursor: default; display: {% display_star_count star_count %}">
-            				 	<span id="{{type}}-starCount{{c.id}}" style="cursor: default; margin:0px;">{{star_count}} {% star_count_people star_count %}
+            				 <span id="{% entity_type entity %}-starCountContainer{{c.id}}" class="starred" style="cursor: default; display: {% display_star_count star_count %}">
+            				 	<span id="{% entity_type entity %}-starCount{{c.id}}" style="cursor: default; margin:0px;">{{star_count}} {% star_count_people star_count %}
             				 </span> starred this</span>
 						</div>
-					<div id="{{type}}-replyContainer{{c.id}}" class="add-comment" style="display:none;">
-						<form id="{{type}}-replyForm{{c.id}}" action="/comments/add/" method="post">{% csrf_token %}
+					<div id="{% entity_type entity %}-replyContainer{{c.id}}" class="add-comment" style="display:none;">
+						<form id="{% entity_type entity %}-replyForm{{c.id}}" action="/comments/add/" method="post">{% csrf_token %}
 							        <div class="fieldWrapper">
 							            {# Include the hidden fields in the form #}
 							            {% for hidden in details_form.hidden_fields %}
@@ -38,14 +38,14 @@
 							            {% endfor %}
 							
 							            <div style="color:red;">{{ details_form.comment.errors }}</div>
-							            <textarea id="{{type}}-comment{{c.id}}" name="comment" cols="40" rows="3" maxlength="300"></textarea>
+							            <textarea id="{% entity_type entity %}-comment{{c.id}}" name="comment" cols="40" rows="3" maxlength="300"></textarea>
 							        </div>
-						    <button id="{{type}}-save{{c.id}}" class="dark" onClick="return false;">Submit</button>
-							<button id="{{type}}-cancel{{c.id}}" class="light" onClick="return false;">Cancel</button>
+						    <button id="{% entity_type entity %}-save{{c.id}}" class="dark" onClick="return false;">Submit</button>
+							<button id="{% entity_type entity %}-cancel{{c.id}}" class="light" onClick="return false;">Cancel</button>
 						</form>
 					</div>
-					{% if child_comments %}
-						{% for child_c in child_comments %}
+					{% if c|child_comments %}
+						{% for child_c in c|child_comments %}
 							<div class="comments" style="margin-left:50px; border-top:solid 1px #EAEAEA;">
 								{% comment_details child_c False %}
 							</div>
