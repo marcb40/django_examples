@@ -11,3 +11,4 @@ class CommentForm(forms.Form):
     content_type_id = forms.IntegerField(widget=forms.HiddenInput)
     current_user_id = forms.IntegerField(widget=forms.HiddenInput)
     type = forms.CharField(widget=forms.HiddenInput)
+    reply_to_id = forms.IntegerField(widget=forms.HiddenInput, required=False)

@@ -15,7 +15,6 @@ class Example(models.Model):
     
     groups = models.ManyToManyField(OrganizationGroup, through='ExampleGroup')
     user_affiliates = models.ManyToManyField(User, through='UserExample')
-    featurette = OneToOneField(Featurette, null=True)
     
     class Meta:
         app_label = 'dex'

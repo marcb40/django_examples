@@ -23,14 +23,23 @@ class CommentManager(models.Manager):
         """
         ctype = ContentType.objects.get_for_model(obj)
         return self.filter(content_type__pk=ctype.pk,
-                           object_id=obj.pk)
+                           object_id=obj.pk, parent=None)
     
     def get_by_id(self, entity_id, content_type_id):
         """
         Create a queryset matching all comments associated with the id.
         """
         return self.filter(content_type__pk=content_type_id,
-                           object_id=entity_id)
+                           object_id=entity_id, parent=None)
+   
+    def get_comment_count(self, obj):
+        ctype = ContentType.objects.get_for_model(obj)
+        return self.filter(content_type__pk=ctype.pk,
+                           object_id=obj.pk).count()
+        
+    def get_comment_count_by_id(self, entity_id, content_type_id):
+        return self.filter(content_type__pk=content_type_id,
+                           object_id=entity_id).count()
 
 
 
@@ -40,7 +49,7 @@ class Comment(models.Model):
     object_id = models.PositiveIntegerField('object id', db_index=True)
     object = generic.GenericForeignKey('content_type', 'object_id')
     
-    parent = models.ForeignKey('self', related_name="immediate_children", null=True)
+    parent = models.ForeignKey('self', related_name="children", null=True)
     creator = models.ForeignKey(User, null=True)
     
     date_created = models.DateField('Created', auto_now_add=True)

@@ -17,17 +17,30 @@ def add_comment(request):
     entity_id = form.data['entity_id']
     content_type_id = form.data['content_type_id']
     current_user_id = form.data['current_user_id']
-        
-    if form.is_valid(): # All validation rules pass
-        Comment.objects.create(comment=form.data['comment'], 
+    reply_to_id = form.data['reply_to_id']
+    comment_type = form.data['type']
+    comments = Comment.objects.get_by_id(entity_id, content_type_id)
+    
+            
+    Comment.objects.create(comment=form.data['comment'], 
                                 object_id=entity_id, 
                                 content_type=ContentType.objects.get(pk=content_type_id), 
                                 creator=User.objects.get(pk=current_user_id),
-                                )
-
-    comments = Comment.objects.get_by_id(entity_id, content_type_id)
+                                parent=(None if reply_to_id == "" else Comment.objects.get(pk=reply_to_id)))
+       
+    form = CommentForm(initial={'entity_id' : entity_id, 
+                                'content_type_id' : content_type_id,
+                                'current_user_id' : current_user_id,
+                                'type': comment_type,
+                                }) 
+        
+    
     return render_to_response('comments/comment_list.html', {
-        'type': form.data['type'],                                                   
+        'entity_id' : entity_id,
+        'content_type_id' : content_type_id,
+        'current_user_id' : current_user_id,
+        'type': comment_type,      
+        'comments': comments,  
+        'comment_count': Comment.objects.get_comment_count_by_id(entity_id, content_type_id),                                           
         'form': form,
-        'comments': comments,
     }, context_instance=RequestContext(request))

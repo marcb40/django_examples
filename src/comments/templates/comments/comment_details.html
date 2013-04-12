@@ -12,7 +12,9 @@
 						<div>{{c.comment}}</div>
 					</div>
 						<div class="link"> 
-							<span id="{{type}}-reply{{c.id}}" style="padding-right: 30px; margin:0px;">REPLY</span>
+							{% if show_reply %}
+							 <span id="{{type}}-reply{{c.id}}" style="padding-right: 30px; margin:0px;">REPLY</span>
+							 {% endif %}
 							 <div style="display:inline-block;">
 								 <input type="checkbox" id="{{type}}-star{{c.id}}" name="{{type}}-star{{c.id}}" class="star" />
 	            				 <label for="{{type}}-star{{c.id}}" style="padding-right: 15px; cursor: pointer;"><span></span>STAR</label>
@@ -24,18 +26,28 @@
             				 	<span id="{{type}}-starCount${c.id}" style="cursor: default; margin:0px;">${c.commentRankings?.size()} ${c.commentRankings?.size() == 1 ? 'Person' : 'People'}
             				 </span> starred this</span> -->
 						</div>
-					<div id="{{type}}-replyContainer${c.id}" style="display:none;">
-						<!-- <g:formRemote name="{{type}}-replyForm${c.id}" url="${[controller: controller, action: 'reply']}" update="{{type}}commentresults" >
-							<g:hiddenField name="replyToId" value="${c.id}"/>
-							<g:hiddenField name="type" value="{{type}}"/>
-							<g:hiddenField name="example.id" value="${entityId}"/>
-							<g:hiddenField name="blog.id" value="${entityId}"/>
-							<g:hiddenField name="update.id" value="${entityId}"/>
-							<g:textArea id="{{type}}-comment${c.id}" name="comment" cols="40" rows="3" maxlength="300"
-								value="" style="width: 100%; padding-right:0px" />
-							<button id="{{type}}-save${c.id}" class="dark" onClick="return false;">Submit</button>
-							<button id="{{type}}-cancel${c.id}" class="light" onClick="return false;">Cancel</button>
-						</g:formRemote> -->
+					<div id="{{type}}-replyContainer{{c.id}}" class="add-comment" style="display:none;">
+						<form id="{{type}}-replyForm{{c.id}}" action="/comments/add/" method="post">{% csrf_token %}
+							        <div class="fieldWrapper">
+							            {# Include the hidden fields in the form #}
+							            {% for hidden in details_form.hidden_fields %}
+							                {{ hidden }}
+							            {% endfor %}
+							
+							            <div style="color:red;">{{ details_form.comment.errors }}</div>
+							            <textarea id="{{type}}-comment{{c.id}}" name="comment" cols="40" rows="3" maxlength="300"></textarea>
+							        </div>
+						    <button id="{{type}}-save{{c.id}}" class="dark" onClick="return false;">Submit</button>
+							<button id="{{type}}-cancel{{c.id}}" class="light" onClick="return false;">Cancel</button>
+						</form>
 					</div>
+					{% load comment_includes %}
+					{% if child_comments %}
+						{% for child_c in child_comments %}
+							<div class="comments" style="margin-left:50px; border-top:solid 1px #EAEAEA;">
+								{% comment_details child_c False %}
+							</div>
+						{% endfor %}
+					{% endif %}
 				</div>
 			</div>

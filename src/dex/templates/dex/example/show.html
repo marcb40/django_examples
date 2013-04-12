@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load example_includes %}
+{% load comment_includes %}
 
 {% block header %}
 	{{ block.super }} 
@@ -50,7 +50,7 @@
 					</div>
 					
 					<div>
-						{% comments %}
+						{% comments exampleInstance %}
 					</div>
 					
 				</div>

@@ -15,6 +15,9 @@ def add_comment(self, comment):
 def get_comments(self):
     return Comment.objects.get_for_object(self)
 
+def get_comment_count(self):
+    return Comment.objects.get_comment_count(self)
+
 def register(model, comments_descriptor_attr='comments'):
     """
     Sets the given model class up for working with comments.
@@ -25,6 +28,7 @@ def register(model, comments_descriptor_attr='comments'):
     
     model.add_to_class("add_comment", add_comment) 
     model.add_to_class("get_comments", get_comments) 
+    model.add_to_class("get_comment_count", get_comment_count) 
     
     # Finally register in registry
     registry.append(model)
