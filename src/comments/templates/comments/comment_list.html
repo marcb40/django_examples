@@ -84,14 +84,15 @@ $(document).ready(function(){
 	$('input[id^="{{type}}-star"]').click(function(event){
 		var id = event.target.id.replace('{{type}}-star', '');
 		var action = (event.target.checked) ? 'like' : 'unlike';
-		$.post( '/${controller}/' + action,
-				{id:id},
-				function (response) {
-					var style = (response == 0) ? 'none' : 'inline';
+		var form = $('#{{type}}-starForm' + id);
+		$.post( '/comments/' + action + "/",
+				form.serialize(),
+				function (data, textStatus, jqXHR) {
+					var style = (data == 0) ? 'none' : 'inline';
 					$('#{{type}}-starCountContainer' + id).css('display', style);
 					
-					var who = (response > 1) ? 'People' : 'Person';
-					$('#{{type}}-starCount' + id).html(response + ' ' + who);
+					var who = (data > 1) ? 'People' : 'Person';
+					$('#{{type}}-starCount' + id).html(data + ' ' + who);
 				}
 			);		
 	});

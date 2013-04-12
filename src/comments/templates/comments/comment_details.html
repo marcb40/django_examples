@@ -1,3 +1,4 @@
+		{% load comment_includes %}
 		<div>
 				<div class="profile">
 					<a href="#"  title="{{c.creator.first_name}}"  /></a>
@@ -16,15 +17,17 @@
 							 <span id="{{type}}-reply{{c.id}}" style="padding-right: 30px; margin:0px;">REPLY</span>
 							 {% endif %}
 							 <div style="display:inline-block;">
-								 <input type="checkbox" id="{{type}}-star{{c.id}}" name="{{type}}-star{{c.id}}" class="star" />
+								 <input type="checkbox" id="{{type}}-star{{c.id}}" name="{{type}}-star{{c.id}}" class="star" {% is_starred c current_user_id %} />
 	            				 <label for="{{type}}-star{{c.id}}" style="padding-right: 15px; cursor: pointer;"><span></span>STAR</label>
-	            				<!--  <g:form id="{{type}}-starForm${c.id}">
-	            				 	<g:hiddenField id="id" name="id" value="${c.id}"/>
-	            				 </g:form> -->
+	            				 <form id="{{type}}-starForm{{c.id}}">{% csrf_token %}
+	            				 	{% for hidden in star_form.hidden_fields %}
+							                {{ hidden }}
+							        {% endfor %}
+	            				 </form>
             				 </div>
-            				<!--  <span id="{{type}}-starCountContainer${c.id}" class="starred" style="cursor: default; display: ${c.commentRankings?.size() > 0 ? 'inline' : 'none'}">
-            				 	<span id="{{type}}-starCount${c.id}" style="cursor: default; margin:0px;">${c.commentRankings?.size()} ${c.commentRankings?.size() == 1 ? 'Person' : 'People'}
-            				 </span> starred this</span> -->
+            				 <span id="{{type}}-starCountContainer{{c.id}}" class="starred" style="cursor: default; display: {% display_star_count star_count %}">
+            				 	<span id="{{type}}-starCount{{c.id}}" style="cursor: default; margin:0px;">{{star_count}} {% star_count_people star_count %}
+            				 </span> starred this</span>
 						</div>
 					<div id="{{type}}-replyContainer{{c.id}}" class="add-comment" style="display:none;">
 						<form id="{{type}}-replyForm{{c.id}}" action="/comments/add/" method="post">{% csrf_token %}
@@ -41,7 +44,6 @@
 							<button id="{{type}}-cancel{{c.id}}" class="light" onClick="return false;">Cancel</button>
 						</form>
 					</div>
-					{% load comment_includes %}
 					{% if child_comments %}
 						{% for child_c in child_comments %}
 							<div class="comments" style="margin-left:50px; border-top:solid 1px #EAEAEA;">

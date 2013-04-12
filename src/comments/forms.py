@@ -12,3 +12,7 @@ class CommentForm(forms.Form):
     current_user_id = forms.IntegerField(widget=forms.HiddenInput)
     type = forms.CharField(widget=forms.HiddenInput)
     reply_to_id = forms.IntegerField(widget=forms.HiddenInput, required=False)
+
+class StarForm(forms.Form):
+    comment_id = forms.IntegerField(widget=forms.HiddenInput)
+    current_user_id = forms.IntegerField(widget=forms.HiddenInput)
