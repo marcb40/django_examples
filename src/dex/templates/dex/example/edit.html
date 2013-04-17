@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% load example_includes %}
+
+{% block title %}Example: {{ example_instance.title }}{% endblock %}
+
+{% block content %}
+	 <div role="main">
+		<div id="save-panel" class="container_12" style="padding-bottom:20px;">
+			<div class="grid_8">
+				<h1>Updating your example</h1>
+				<p><span id="exampleSubTitle">Click "Finish Editing" when you're done to update your example.</span></p>
+			</div>
+									
+			<div class="grid_4" style="text-align: right;">
+				<button id="finish-editing" class="dark" style="margin-top: 26px;">Finish Editing</button>
+			</div>
+		</div>
+		<div class="clear"></div>
+	
+		<form id="exampleForm" action="{% url 'dex:update' example_instance_id %}" method="post">{% csrf_token %}
+			<div class="container_12">
+				<div class="grid_8">
+					<div class="content-panel example">
+	
+						<!-- TITLE -->
+						<div style="float: left; margin-bottom: 30px;">
+							<label for="title"> <span class="required-indicator">*</span>Title<span
+								id="title-help" class="help"
+								style="float: right; margin-right: 0px;"
+								title="Remember you're speaking to a broad audience. So keep it snappy, interesting and jargon-free."></span>
+							</label> <span style="color:red;">{{form.title.errors }}</span>
+							<input type="text" name="title" maxlength="60"
+								value="{{form.title.value}}" style="width: 560px;" />
+						</div>
+						<div class="clear"></div>
+						
+						<!--  SUMMARY -->
+						<div style="margin-bottom: 30px;">
+							<label for="summary"> <span class="required-indicator">*</span>Summary<span
+								id="summary-help" class="help"
+								style="float: right; margin-right: 5px;"
+								title="Give us the quick and dirty on your example - what's it about? Keep it short, there's plenty of places to add more later."></span>
+							</label><span style="color:red;">{{form.summary.errors }}</span>
+							<input type="text" name="summary" cols="40" rows="3" maxlength="600" 
+								value="{{form.summary.value}}" style="width: 560px;" />
+						</div>
+						
+						<!-- VISIBILITY -->
+						<label for="visible"> <span class="required-indicator">*</span>Visibility<span
+							id="visibility-help" class="help" style="margin-left: 5px;"
+							title="Public - Share your idea with the world. Go public! <br/><br/> Private - Not quite ready? Share it with just your team, for now."></span>
+						</label><span style="color:red;">{{form.visibility.errors }}</span>
+						<div style="margin-bottom: 30px;">
+							<div style="float: left; margin-right: 8px;">
+								<input type="radio" id="visibilePub" name="visible" value="true"
+									{% is_visible form.visible.value %} /> <label
+									for="visibilePub"><span></span>Public</label>
+							</div>
+							<div style="float: left; margin-left: 30px; margin-right: 8px;">
+								<input type="radio" id="visibilePri" name="visible" value="false"
+									{% is_not_visible form.visible.value %}/> <label
+									for="visibilePri"><span></span>Private</label>
+							</div>
+							<div class="clear"></div>
+						</div>
+						
+						
+					</div>
+					<div class="clear"></div>
+					<div class="clear"></div>
+						
+					<div id="tab-section" style="margin-top: 30px; margin-left:0px;">
+								<!-- <%-- TABS --%> -->
+							
+								<div id="example-display-tabs" style="margin-left:0px;">
+									<div class="grid_8 alpha">
+										<ul style="list-style: none; margin: 0px; padding: 0px;">
+												<li style="margin-left: 0px; float: left; padding-right: 5px; width:165px;"><a href="#tab-updates" style="text-align:center; width:145px; padding-left:10px; padding-right:10px;">Updates</a></li>
+												<li style="margin-left: 10px; float: left; padding-right: 5px; width:165px;"><a href="#tab-phases" style="text-align:center; width:145px; padding-left:10px; padding-right:10px;">Phases</a></li>
+												<li id="tabDiscussion" style="margin-left: 10px; float: left; padding-right: 5px; width:165px;"><a href="#tab-discussion" style="text-align:center; width:145px; padding-left:10px; padding-right:10px;">Workspace</a></li>
+										</ul>
+									</div>
+									<div class="clear"></div>
+									
+									<div id="tab-content" class="grid_8 alpha">
+										<div style="margin-left: 20px;">
+											
+											<!-- <%--  UPDATES --%> -->
+											<div id="tab-updates"
+												style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-top: 0px;;  min-height: 530px  ">
+							
+												<div
+													style="width: 150px; display: inline; float: left; margin-left: 0px;">
+													
+													<!-- <%-- TIMELINE --%> -->
+													<div>
+														<ul id="timeline-of-updates" ></ul>
+													</div>
+													
+												</div>
+							
+												<div 
+													style="width:385px; float: left; margin-left: 20px; padding-right: 0px; margin-right: 0px;">
+													<div id="update-section" style="margin-bottom:20px"></div>
+													<div class="clear"></div>
+													<div id="update-comment-section" ></div>
+												</div>
+											</div>	
+					
+											
+											<!-- <%-- PHASES & DISCUSSION --%> -->
+												<div id="tab-phases" class="phase-tabs example"
+													style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-top: 0px;">
+	
+													<div id="phase-tabs">
+														<ul style="list-style: none; margin-top: 20px; padding: 0px;">
+															<li style="margin-left: 0px; float: left; padding-right: 5px; border-right: 1px solid #C9C9C9;"><a href="#tab-seed">Seed</a></li>
+															<li style="margin-left: 14px; float: left; padding-right: 5px; border-right: 1px solid #C9C9C9;"><a	href="#tab-sprout">Sprout</a></li>
+															<li style="margin-left: 14px; float: left; padding-right: 5px;"><a href="#tab-bloom">Bloom</a></li>
+														</ul>
+														<!-- <%-- SEED --%> -->
+														<g:render template="phaseQuestionsShow" model="${[phase:example_instance.seed, phaseLowerName:'seed', phaseProperName:'Seed', phaseQuestions:seedQuestions, type:ExampleCommentType.SEED, commentCount:seedCommentCount]}" />
+														<!-- <%-- SPROUT --%> -->
+														<g:render template="phaseQuestionsShow" model="${[phase:example_instance.sprout, phaseLowerName:'sprout', phaseProperName:'Sprout', phaseQuestions:sproutQuestions, type:ExampleCommentType.SPROUT, commentCount:sproutCommentCount]}" />
+														<!-- <%-- BLOOM --%> -->
+														<g:render template="phaseQuestionsShow" model="${[phase:example_instance.bloom, phaseLowerName:'bloom', phaseProperName:'Bloom', phaseQuestions:bloomQuestions, type:ExampleCommentType.BLOOM, commentCount:bloomCommentCount]}" />
+													</div>
+												</div>
+												
+												<div id="tab-discussion"
+													style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-top: 0px;  min-height: 530px">
+													<g:render template="/discussion/discussion" model="${[discussionController:'exampleDiscussion', entityName:'example', entityId:example_instance.id, allowEdit:true]}" />
+												</div>
+							
+										</div>
+							
+									</div>
+									<div class="clear"></div>
+								</div>
+							
+							
+							</div>
+						
+					
+				</div>
+			
+				<div class="grid_4">
+						<div style="position: relative; margin-top:25px;" ></div>
+					
+						<!-- TAGS -->
+						<g:if test="${example_instance?.tags}">
+							<div id="btn-tags" style="position: relative; margin-bottom: 50px;">
+								<h2><g:message code="example.tags.label" /></h2>
+								<ul id="tags" class="tags"></ul>
+								<div class="clear"></div>
+							</div>
+						</g:if>
+						
+						<!-- TEAM -->
+						<g:if test="${team}">
+							<div id="btn-team" style="position: relative;  margin-bottom: 50px; width:250px;" >
+								<h2><g:message code="example.team.label" /> (${teamCount})</h2>
+								<ul id="exTeam" class="team-members"></ul>
+								<div class="clear"></div>	
+								<g:if test="${teamCount > 8 }">
+									<nav:more action="team"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="8" total="${teamCount}" originatorTitle="${example_instance?.title}" />
+								</g:if>					
+							</div>
+						</g:if>
+						
+						<!-- GROUPS -->
+						<g:if test="${groups}">
+							<div id="btn-groups" style="position: relative;  margin-bottom: 50px; width:250px;" >
+								<h2><g:message code="example.groups.label" /> (${groupsCount})</h2>
+								<ul id="exGroups" class="example-groups"></ul>
+								<div class="clear"></div>	
+								<g:if test="${groupsCount > 3 }">
+									<nav:more action="groups"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="3" total="${groupsCount}" originatorTitle="${example_instance?.title}" />
+								</g:if>					
+							</div>
+						</g:if>
+						
+						<!-- ORGANIZATIONS -->
+						<g:if test="${organizations}">
+							<div id="btn-orgs" style="position: relative;  margin-bottom: 50px; width:250px;" >
+								<h2><g:message code="example.organizations.label" /> (${organizationsCount})</h2>
+								<ul id="exOrgs" class="example-organizations"></ul>
+								<div class="clear"></div>	
+								<g:if test="${organizationsCount > 2 }">
+									<nav:more action="organizations"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="2" total="${organizationsCount}" originatorTitle="${example_instance?.title}" />
+								</g:if>					
+							</div>
+						</g:if>
+						
+						<!-- INSPIRED BY -->
+						<g:if test="${inspiredByList}">
+							<div id="btn-inspBy" style="position: relative;  margin-bottom: 50px; width:250px;" >
+								<h2><g:message code="example.inspiredBy.label" /> (${inspiredByCount})</h2>
+								<ul id="exInspBy" class="example-inspirations"></ul>
+								<div class="clear"></div>	
+								<g:if test="${inspiredByCount > 1 }">
+									<nav:more action="inspiredBy"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="1" total="${inspiredByCount}" originatorTitle="${example_instance?.title}" />
+								</g:if>					
+							</div>
+						</g:if>
+						
+						<!-- INSPIRATION FOR -->
+						<g:if test="${inspirationFor}">
+							<div id="btn-inspFor" style="position: relative;  margin-bottom: 50px; width:250px;" >
+								<h2><g:message code="example.inspiration.label" /> (${inspirationForCount})</h2>
+								<ul id="exInspFor" class="example-inspirations"></ul>
+								<div class="clear"></div>	
+								<g:if test="${inspirationForCount > 1 }">
+									<nav:more action="inspirationFor"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="1" total="${inspirationForCount}" originatorTitle="${example_instance?.title}" />
+								</g:if>					
+							</div>
+						</g:if>
+						
+						<!-- RELATED EXAMPLES -->
+						<g:if test="${relatedExamples}">
+							<div id="btn-related" style="position: relative;  margin-bottom: 50px; width:250px;" >
+								<h2><g:message code="example.relatives.label" /> (${relatedExamplesCount})</h2>
+								<ul id="exRelated" class="example-relatives"></ul>
+								<div class="clear"></div>	
+								<g:if test="${relatedExamplesCount > 3 }">
+									<nav:more action="examples"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="3" total="${relatedExamplesCount}" originatorTitle="${example_instance?.title}" />
+								</g:if>					
+							</div>
+						</g:if>
+					
+					</div>	
+			
+			</div>
+		</form>
+	</div>	
+	<link rel="stylesheet" type="text/css" href="/static/css/ckdialog.css"/>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#share-dropdown').dropdownmenu({button: 'shareBtn'});
+			
+			$('#example-display-tabs').tabs();
+			$('#phase-tabs').tabs();
+			
+			$('#finish-editing').on('click', function() {
+					var form = $('#exampleForm');
+					form.submit();
+			});
+		});
+	</script>	
+	<link rel="stylesheet" type="text/css" href="/static/css/ckdialog.css"/>	
+{% endblock %}

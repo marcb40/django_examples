@@ -13,8 +13,9 @@ class Example(models.Model):
     date_created = models.DateField('Created', auto_now_add=True)
     last_updated = models.DateField('Updated', auto_now=True)
     
-    groups = models.ManyToManyField(OrganizationGroup, through='ExampleGroup')
-    user_affiliates = models.ManyToManyField(User, through='UserExample')
+    #groups = models.ManyToManyField(OrganizationGroup, through='ExampleGroup', blank=True)
+    #user_affiliates = models.ManyToManyField(User, through='UserExample', blank=True)
+    featurette = OneToOneField(Featurette, blank=True)
     
     class Meta:
         app_label = 'dex'
@@ -26,3 +27,14 @@ class Example(models.Model):
         return self.title
 
 comments.register(Example)
+
+class Update(models.Model):
+    example = models.ForeignKey(Example)
+    updateDate = models.DateField()
+    title = models.CharField(max_length=60, blank=False)
+    author = models.ForeignKey(User)
+    text = models.TextField(max_length=800)
+    
+    date_created = models.DateField('Created', auto_now_add=True)
+
+comments.register(Update)

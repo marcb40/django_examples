@@ -6,7 +6,7 @@
 	<script type="text/javascript" src="/static/js/socialMedia.js"></script>
 {% endblock %}
 
-{% block title %}Example: {{ exampleInstance.title }}{% endblock %}
+{% block title %}Example: {{ example_instance.title }}{% endblock %}
 
 {% block content %}
 	 <div role="main">
@@ -17,7 +17,7 @@
 			</div>
 									
 			<div class="grid_4" style="text-align: right;">
-				<a href="/example/edit/{{exampleInstance.id}}">
+				<a href="{% url 'dex:edit' example_instance.id %}">
 					<button id="editBtn" class="dark" style="margin-top: 26px;">Edit</button>
 				</a>
 			</div>
@@ -28,10 +28,10 @@
 			<div class="grid_8">
 				<div class="content-panel example">
 
-					<span class="example-name">{{ exampleInstance.title }}</span>
+					<span class="example-name">{{ example_instance.title }}</span>
 					
 					<div style="margin-top: 25px; display:inline-block" >
-						<p>{{exampleInstance.summary}}</p>
+						<p>{{example_instance.summary}}</p>
 					</div>
 					
 					<div>
@@ -50,7 +50,7 @@
 					</div>
 					
 					<div>
-						{% comments exampleInstance %}
+						{% comments example_instance %}
 					</div>
 					
 				</div>
@@ -107,17 +107,17 @@
 														<li style="margin-left: 14px; float: left; padding-right: 5px;"><a href="#tab-bloom">Bloom</a></li>
 													</ul>
 													<!-- <%-- SEED --%> -->
-													<g:render template="phaseQuestionsShow" model="${[phase:exampleInstance.seed, phaseLowerName:'seed', phaseProperName:'Seed', phaseQuestions:seedQuestions, type:ExampleCommentType.SEED, commentCount:seedCommentCount]}" />
+													<g:render template="phaseQuestionsShow" model="${[phase:example_instance.seed, phaseLowerName:'seed', phaseProperName:'Seed', phaseQuestions:seedQuestions, type:ExampleCommentType.SEED, commentCount:seedCommentCount]}" />
 													<!-- <%-- SPROUT --%> -->
-													<g:render template="phaseQuestionsShow" model="${[phase:exampleInstance.sprout, phaseLowerName:'sprout', phaseProperName:'Sprout', phaseQuestions:sproutQuestions, type:ExampleCommentType.SPROUT, commentCount:sproutCommentCount]}" />
+													<g:render template="phaseQuestionsShow" model="${[phase:example_instance.sprout, phaseLowerName:'sprout', phaseProperName:'Sprout', phaseQuestions:sproutQuestions, type:ExampleCommentType.SPROUT, commentCount:sproutCommentCount]}" />
 													<!-- <%-- BLOOM --%> -->
-													<g:render template="phaseQuestionsShow" model="${[phase:exampleInstance.bloom, phaseLowerName:'bloom', phaseProperName:'Bloom', phaseQuestions:bloomQuestions, type:ExampleCommentType.BLOOM, commentCount:bloomCommentCount]}" />
+													<g:render template="phaseQuestionsShow" model="${[phase:example_instance.bloom, phaseLowerName:'bloom', phaseProperName:'Bloom', phaseQuestions:bloomQuestions, type:ExampleCommentType.BLOOM, commentCount:bloomCommentCount]}" />
 												</div>
 											</div>
 											
 											<div id="tab-discussion"
 												style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-top: 0px;  min-height: 530px">
-												<g:render template="/discussion/discussion" model="${[discussionController:'exampleDiscussion', entityName:'example', entityId:exampleInstance.id, allowEdit:true]}" />
+												<g:render template="/discussion/discussion" model="${[discussionController:'exampleDiscussion', entityName:'example', entityId:example_instance.id, allowEdit:true]}" />
 											</div>
 						
 									</div>
@@ -136,7 +136,7 @@
 					<div style="position: relative; margin-top:25px;" ></div>
 				
 					<!-- TAGS -->
-					<g:if test="${exampleInstance?.tags}">
+					<g:if test="${example_instance?.tags}">
 						<div id="btn-tags" style="position: relative; margin-bottom: 50px;">
 							<h2><g:message code="example.tags.label" /></h2>
 							<ul id="tags" class="tags"></ul>
@@ -151,7 +151,7 @@
 							<ul id="exTeam" class="team-members"></ul>
 							<div class="clear"></div>	
 							<g:if test="${teamCount > 8 }">
-								<nav:more action="team"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="8" total="${teamCount}" originatorTitle="${exampleInstance?.title}" />
+								<nav:more action="team"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="8" total="${teamCount}" originatorTitle="${example_instance?.title}" />
 							</g:if>					
 						</div>
 					</g:if>
@@ -163,7 +163,7 @@
 							<ul id="exGroups" class="example-groups"></ul>
 							<div class="clear"></div>	
 							<g:if test="${groupsCount > 3 }">
-								<nav:more action="groups"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="3" total="${groupsCount}" originatorTitle="${exampleInstance?.title}" />
+								<nav:more action="groups"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="3" total="${groupsCount}" originatorTitle="${example_instance?.title}" />
 							</g:if>					
 						</div>
 					</g:if>
@@ -175,7 +175,7 @@
 							<ul id="exOrgs" class="example-organizations"></ul>
 							<div class="clear"></div>	
 							<g:if test="${organizationsCount > 2 }">
-								<nav:more action="organizations"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="2" total="${organizationsCount}" originatorTitle="${exampleInstance?.title}" />
+								<nav:more action="organizations"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="2" total="${organizationsCount}" originatorTitle="${example_instance?.title}" />
 							</g:if>					
 						</div>
 					</g:if>
@@ -187,7 +187,7 @@
 							<ul id="exInspBy" class="example-inspirations"></ul>
 							<div class="clear"></div>	
 							<g:if test="${inspiredByCount > 1 }">
-								<nav:more action="inspiredBy"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="1" total="${inspiredByCount}" originatorTitle="${exampleInstance?.title}" />
+								<nav:more action="inspiredBy"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="1" total="${inspiredByCount}" originatorTitle="${example_instance?.title}" />
 							</g:if>					
 						</div>
 					</g:if>
@@ -199,7 +199,7 @@
 							<ul id="exInspFor" class="example-inspirations"></ul>
 							<div class="clear"></div>	
 							<g:if test="${inspirationForCount > 1 }">
-								<nav:more action="inspirationFor"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="1" total="${inspirationForCount}" originatorTitle="${exampleInstance?.title}" />
+								<nav:more action="inspirationFor"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="1" total="${inspirationForCount}" originatorTitle="${example_instance?.title}" />
 							</g:if>					
 						</div>
 					</g:if>
@@ -211,7 +211,7 @@
 							<ul id="exRelated" class="example-relatives"></ul>
 							<div class="clear"></div>	
 							<g:if test="${relatedExamplesCount > 3 }">
-								<nav:more action="examples"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${exampleInstance.id}" searchId="${exampleInstance.id}" offset="3" total="${relatedExamplesCount}" originatorTitle="${exampleInstance?.title}" />
+								<nav:more action="examples"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="3" total="${relatedExamplesCount}" originatorTitle="${example_instance?.title}" />
 							</g:if>					
 						</div>
 					</g:if>

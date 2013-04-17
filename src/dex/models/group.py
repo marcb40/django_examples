@@ -21,16 +21,16 @@ ORGANIZATION_STATUS = (
 class OrganizationGroup(models.Model):
     title = models.CharField(max_length=60, blank=False)
     summary = models.CharField(max_length=200, blank=False)
-    group_type = models.CharField(max_length=20, null=False, choices=GROUP_TYPE)
+    group_type = models.CharField(max_length=20, blank=False, choices=GROUP_TYPE)
     allow_join_group = models.BooleanField()
     funder = models.BooleanField()
     date_created = models.DateField('Created', auto_now_add=True)
     last_updated = models.DateField('Updated', auto_now=True)
-    org_status = models.CharField(max_length=20, null=True, choices=ORGANIZATION_STATUS)
+    org_status = models.CharField(max_length=20, blank=True, choices=ORGANIZATION_STATUS)
     
     user_affiliates = models.ManyToManyField(User, through='UserGroup')  #TODO: validation
     categories = models.ManyToManyField(Category)  #TODO: validation
-    featurette = OneToOneField(Featurette, null=True)
+    featurette = OneToOneField(Featurette, blank=True)
 
     class Meta:
         app_label = 'dex'
