@@ -157,16 +157,21 @@
 						</g:if>
 						
 						<!-- TEAM -->
-						<g:if test="${team}">
 							<div id="btn-team" style="position: relative;  margin-bottom: 50px; width:250px;" >
-								<h2><g:message code="example.team.label" /> (${teamCount})</h2>
-								<ul id="exTeam" class="team-members"></ul>
+								<h2>Team ({{user_formset.initial_form_count}})</h2>
+								{{ user_formset.management_form }}
+								<ul id="exTeam" class="team-members">
+									{% for form in user_formset.forms %}
+										<li><div style="padding:5px 0px 0px 2px;">{{form.instance.user.first_name}}</div></li>
+									    {{ form.id }}
+									    {{ form.user}}
+									{% endfor %}
+								</ul>
 								<div class="clear"></div>	
 								<g:if test="${teamCount > 8 }">
 									<nav:more action="team"  entityType="${MoreResultsEntityType.EXAMPLE}" entityId="${example_instance.id}" searchId="${example_instance.id}" offset="8" total="${teamCount}" originatorTitle="${example_instance?.title}" />
 								</g:if>					
 							</div>
-						</g:if>
 						
 						<!-- GROUPS -->
 						<g:if test="${groups}">

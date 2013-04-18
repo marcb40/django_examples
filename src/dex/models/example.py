@@ -14,7 +14,7 @@ class Example(models.Model):
     last_updated = models.DateField('Updated', auto_now=True)
     
     #groups = models.ManyToManyField(OrganizationGroup, through='ExampleGroup', blank=True)
-    #user_affiliates = models.ManyToManyField(User, through='UserExample', blank=True)
+    user_affiliates = models.ManyToManyField(User, through='UserExample', blank=True)
     featurette = OneToOneField(Featurette, blank=True)
     
     class Meta:
