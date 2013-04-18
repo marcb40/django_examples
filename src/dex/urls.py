@@ -16,6 +16,5 @@ urlpatterns = patterns('',
         name='browse'),
                        
     url(r'^show/example/(?P<example_id>\d+)$', 'dex.views.example.show', name='show'),      
-    url(r'^edit/example/(?P<example_id>\d+)$', 'dex.views.example.edit', name='edit'),    
-    url(r'^update/example/(?P<example_id>\d+)$', 'dex.views.example.update', name='update'),                         
+    url(r'^update/example/(?P<example_id>\d+)$', 'dex.views.example.edit_update', name='update'),                         
 )
