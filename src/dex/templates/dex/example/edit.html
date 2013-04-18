@@ -163,8 +163,7 @@
 								<ul id="exTeam" class="team-members">
 									{% for form in user_formset.forms %}
 										<li><div style="padding:5px 0px 0px 2px;">{{form.instance.user.first_name}}</div></li>
-									    {{ form.id }}
-									    {{ form.user}}
+									    {{ form }}
 									{% endfor %}
 								</ul>
 								<div class="clear"></div>	

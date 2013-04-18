@@ -18,4 +18,5 @@ class BaseUserExampleFormSet(BaseModelFormSet):
     def add_fields(self, form, index): 
         super(BaseUserExampleFormSet, self).add_fields(form,index) 
         form.fields["user"] = forms.ModelChoiceField(queryset=User.objects.all(), widget=HiddenInput)
-        
+        form.fields["example"] = forms.ModelChoiceField(queryset=Example.objects.all(), widget=HiddenInput)
+        form.fields["affiliationType"] = forms.CharField(widget=HiddenInput)
